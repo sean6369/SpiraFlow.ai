@@ -1,0 +1,35 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-native",
+    "types": [
+      "nativewind/types",
+      "react",
+      "react-native",
+      "jest"
+    ],
+    "paths": {
+      "@spiraflow/shared": [
+        "../../packages/shared/src/index.ts"
+      ],
+      "@spiraflow/shared/*": [
+        "../../packages/shared/src/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "nativewind-env.d.ts"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/Pods"
+  ],
+  "references": [
+    {
+      "path": "../../packages/shared"
+    }
+  ]
+}
