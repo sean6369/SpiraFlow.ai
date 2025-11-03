@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(request: NextRequest) {
     try {
         const { transcription } = await request.json();
@@ -15,6 +11,10 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
+
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
 
         if (transcription.trim().length < 10) {
             return NextResponse.json(

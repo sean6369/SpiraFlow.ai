@@ -14,9 +14,6 @@ const config = {
       path.resolve(workspaceRoot, 'node_modules'),
     ],
   },
-  server: {
-    unstable_enableSymlinks: true,
-  },
 };
 
 module.exports = withNativeWind(

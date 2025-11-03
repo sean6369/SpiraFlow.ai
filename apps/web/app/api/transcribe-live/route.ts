@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@deepgram/sdk';
 
-const deepgram = createClient(process.env.DEEPGRAM_API_KEY!);
-
 export async function POST(request: NextRequest) {
     try {
         console.log('🎤 Deepgram transcribe-live API called');
@@ -12,6 +10,8 @@ export async function POST(request: NextRequest) {
             console.error('❌ DEEPGRAM_API_KEY not found in environment variables');
             return NextResponse.json({ error: 'Deepgram API key not configured' }, { status: 500 });
         }
+
+        const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
 
         const formData = await request.formData();
         const audioFile = formData.get('audio') as File;

@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    timeout: 10000,
-    maxRetries: 1,
-});
-
 export async function GET() {
     try {
         console.log('Testing OpenAI connection...');
         console.log('API Key exists:', !!process.env.OPENAI_API_KEY);
         console.log('API Key starts with:', process.env.OPENAI_API_KEY?.substring(0, 10) + '...');
+
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+            timeout: 10000,
+            maxRetries: 1,
+        });
 
         // Test simple API call
         const models = await openai.models.list();

@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { UserPattern, JournalEntry } from '@spiraflow/shared';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(request: NextRequest) {
     try {
         const { currentEntry, recentEntries, userPatterns } = await request.json() as {
@@ -13,6 +9,10 @@ export async function POST(request: NextRequest) {
             recentEntries: JournalEntry[];
             userPatterns?: UserPattern;
         };
+
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
 
         // Build comprehensive context from user patterns
         let contextInfo = '';

@@ -1,7 +1,4 @@
 import { NextRequest } from 'next/server';
-import { createClient, LiveTranscriptionEvents } from '@deepgram/sdk';
-
-const deepgram = createClient(process.env.DEEPGRAM_API_KEY!);
 
 export async function GET(request: NextRequest) {
     // This would implement WebSocket streaming for real-time transcription

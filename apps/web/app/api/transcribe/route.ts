@@ -9,22 +9,24 @@ const agent = new Agent({
     connections: 100,
 });
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    timeout: 30000, // Reduced to 30 seconds for faster response
-    maxRetries: 0, // No retries for live transcription to reduce latency
-    fetch: (url: RequestInfo | URL, init?: RequestInit) => {
-        return undiciFetch(url, {
-            ...init,
-            // @ts-ignore - duplex is required for undici but not in standard RequestInit type
-            duplex: 'half',
-            dispatcher: agent,
-        });
-    },
-});
-
 export async function POST(request: NextRequest) {
     try {
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+            timeout: 30000, // Reduced to 30 seconds for faster response
+            maxRetries: 0, // No retries for live transcription to reduce latency
+            // @ts-ignore - Type compatibility between undici fetch and standard fetch
+            fetch: (url: RequestInfo | URL, init?: RequestInit) => {
+                // @ts-ignore - Type compatibility between undici and standard fetch
+                return undiciFetch(url, {
+                    ...init,
+                    // @ts-ignore - duplex is required for undici but not in standard RequestInit type
+                    duplex: 'half',
+                    dispatcher: agent,
+                });
+            },
+        });
+
         const formData = await request.formData();
         const audioFile = formData.get('audio') as File;
 

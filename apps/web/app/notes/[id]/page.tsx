@@ -65,8 +65,8 @@ export default function NoteDetailPage() {
                 getAudio(entryId)
             ]);
 
-            setEntry(entryData);
-            setAudioBlob(audioData);
+            setEntry(entryData || null);
+            setAudioBlob(audioData || null);
         } catch (error) {
             console.error('Error loading entry:', error);
         } finally {

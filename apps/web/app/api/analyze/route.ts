@@ -2,12 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { AIAnalysis } from '@spiraflow/shared';
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    timeout: 30000, // 30 seconds timeout
-    maxRetries: 2,
-});
-
 export async function POST(request: NextRequest) {
     try {
         const { transcription } = await request.json();
@@ -18,6 +12,12 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
+
+        const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+            timeout: 30000, // 30 seconds timeout
+            maxRetries: 2,
+        });
 
         const prompt = `Analyze the following journal entry and provide:
 1. Main topics/themes (as an array of strings)
